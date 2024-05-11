@@ -1,0 +1,56 @@
+# Flutter/Dart specific
+## Dart
+.dart_tool/
+.packages
+.pub/
+/build/
+
+## Flutter specific
+*.iml
+*.metadata
+/.dart_tool/
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.idea/
+/.vscode/
+/android/key.properties
+/build/
+/ios/Pods/
+/ios/.symlinks/
+/ios/Flutter/ephemeral/
+/ios/Flutter/flutter_assets/
+/ios/Flutter/flutter_export_environment.sh
+/web/assets/
+/web/bundle/
+/web/packages/
+/web/generated_plugin_registrant.dart
+
+# IDE/Editor files
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# Android files
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+
+# iOS files
+*.log
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+*.xcuserstate
+DerivedData/
+*.hmap
+*.ipa
+*.xcarchive
+
+# Flutter build cache
+build/
