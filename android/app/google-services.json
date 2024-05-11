@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140125642592",
+    "project_id": "signin-e86be",
+    "storage_bucket": "signin-e86be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140125642592:android:5d680b39edf8ba11dcc805",
+        "android_client_info": {
+          "package_name": "com.example.google_signin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXmDgguVCThN81w2bRaNE5Lg4q5tsWbE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
