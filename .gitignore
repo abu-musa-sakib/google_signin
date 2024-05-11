@@ -1,41 +1,29 @@
-# Flutter/Dart specific files
+# Flutter/Dart specific
+## Dart
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
 .packages
 .pub/
-build/
-ios/Flutter/.last_build_id
-.dart_tool/
+/build/
+
+## Flutter specific
 *.iml
-.idea/
-.vscode/
-.android/
-.DS_Store
-ios/Flutter/App.framework/
-ios/Flutter/App.xcconfig
-ios/Flutter/Flutter.framework/
-ios/Flutter/Generated.xcconfig
-ios/Flutter/flutter_export_environment.sh
-macos/Flutter/Flutter.xcconfig
-macos/Flutter/Generated.xcconfig
-.android/
-android/.gradle/
-android/local.properties
-android/app/build/
-android/app/key.properties
-android/app/src/main/flutter_assets/assets/
-android/build/
-android/gradle/
-android/gradlew
-android/gradlew.bat
-android/local.properties
-android/gradle.properties
-android/gradle-wrapper.properties
-ios/Flutter/flutter_assets/
-ios/Pods/
-ios/Podfile.lock
-ios/Podfile
+*.metadata
+/.dart_tool/
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.idea/
+/.vscode/
+/android/key.properties
+/build/
+/ios/Pods/
+/ios/.symlinks/
+/ios/Flutter/ephemeral/
+/ios/Flutter/flutter_assets/
+/ios/Flutter/flutter_export_environment.sh
+/web/assets/
+/web/bundle/
+/web/packages/
+/web/generated_plugin_registrant.dart
 
 # IDE/Editor files
 *.iml
