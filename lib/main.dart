@@ -67,11 +67,8 @@ class _CustomInfoState extends State<CustomInfo> {
   }
 }
 
-
 // Scopes required for Google Sign-In
-const List<String> scopes = <String>[
-  'email'
-];
+const List<String> scopes = <String>['email'];
 
 // Google Sign-In instance
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -108,7 +105,8 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
     super.initState();
 
     // Listen for changes in the signed-in user
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
+    _googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount? account) async {
       bool isAuthorized = account != null;
       // Check authorization on web
       if (kIsWeb && account != null) {
@@ -128,10 +126,26 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
   // Handle sign-in button click
   Future<void> _handleSignIn() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
+        // Get the authentication object
+        final GoogleSignInAuthentication googleAuth =
+            await googleSignInAccount.authentication;
+
+        // Retrieve the ID token
+        final String? idToken = googleAuth.idToken;
+
         if (kDebugMode) {
           print('Signed in as: ${googleSignInAccount.email}');
+          print('Display name: ${googleSignInAccount.displayName}');
+          if (idToken != null) {
+            print('ID Token: $idToken');
+          } else {
+            if (kDebugMode) {
+              print('ID Token is null');
+            }
+          }
         }
       } else {
         if (kDebugMode) {
@@ -145,38 +159,38 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
     }
   }
 
- // Prompt user to authorize required scopes
-Future<void> _handleAuthorizeScopes() async {
-  final bool isAuthorized = await _googleSignIn.requestScopes(scopes);
+  // Prompt user to authorize required scopes
+  Future<void> _handleAuthorizeScopes() async {
+    final bool isAuthorized = await _googleSignIn.requestScopes(scopes);
 
-  if (mounted) {
-    setState(() {
-      _isAuthorized = isAuthorized;
-    });
+    if (mounted) {
+      setState(() {
+        _isAuthorized = isAuthorized;
+      });
 
-    if (isAuthorized) {
-      // Display a message
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Authorization Successful"),
-            content: const Text("You are now authorized to access the required scopes."),
-            actions: <Widget>[
-              TextButton(
-                child: const Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+      if (isAuthorized) {
+        // Display a message
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Authorization Successful"),
+              content: const Text(
+                  "You are now authorized to access the required scopes."),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
-}
-
 
   // Handle sign-out button click
   Future<void> _handleSignOut() => _googleSignIn.disconnect();
