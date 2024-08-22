@@ -1,76 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-/// The type of the onClick callback for the (mobile) Sign In Button.
-typedef HandleSignInFn = Future<void> Function();
-
-/// Renders a SIGN IN button that calls `handleSignIn` onclick.
-Widget buildSignInButton({HandleSignInFn? onPressed}) {
-  return ElevatedButton(
-    onPressed: onPressed,
-    child: const Text('SIGN IN WITH GOOGLE'),
-  );
-}
-
-class CustomInfo extends StatefulWidget {
-  final String message;
-  final Duration duration;
-
-  const CustomInfo({
-    super.key,
-    required this.message,
-    this.duration = const Duration(seconds: 3),
-  });
-
-  @override
-  _CustomInfoState createState() => _CustomInfoState();
-}
-
-class _CustomInfoState extends State<CustomInfo> {
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _hideAfterDelay();
-  }
-
-  void _hideAfterDelay() {
-    Future.delayed(widget.duration, () {
-      if (mounted) {
-        setState(() {
-          _isVisible = false;
-        });
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _isVisible
-        ? Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.blueGrey.shade800,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              widget.message,
-              style: const TextStyle(color: Colors.white),
-            ),
-          )
-        : const SizedBox.shrink();
-  }
-}
-
 // Scopes required for Google Sign-In
 const List<String> scopes = <String>['email'];
 
-// Google Sign-In instance
+// Load Configuration Files (Initialize GoogleSignIn instance)
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: scopes,
 );
@@ -78,8 +14,10 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 void main() {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
+  
   // Initialize GoogleSignIn instance
   _googleSignIn = GoogleSignIn();
+  
   // Run the app
   runApp(const MaterialApp(
     title: "Google Sign-in",
@@ -87,6 +25,7 @@ void main() {
   ));
 }
 
+// Main App Widget
 class GoogleSigninApp extends StatefulWidget {
   const GoogleSigninApp({super.key});
 
@@ -128,6 +67,7 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
+
       if (googleSignInAccount != null) {
         // Get the authentication object
         final GoogleSignInAuthentication googleAuth =
@@ -136,23 +76,24 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
         // Retrieve the ID token
         final String? idToken = googleAuth.idToken;
 
+        // Debug info
         if (kDebugMode) {
           print('Signed in as: ${googleSignInAccount.email}');
           print('Display name: ${googleSignInAccount.displayName}');
           if (idToken != null) {
             print('ID Token: $idToken');
           } else {
-            if (kDebugMode) {
-              print('ID Token is null');
-            }
+            print('ID Token is null');
           }
         }
       } else {
+        // Debug info if sign-in fails
         if (kDebugMode) {
           print('Failed to sign in.');
         }
       }
     } catch (error) {
+      // Debug info in case of error
       if (kDebugMode) {
         print('Error signing in: $error');
       }
@@ -252,5 +193,69 @@ class _GoogleSigninAppState extends State<GoogleSigninApp> {
         child: _buildBody(),
       ),
     );
+  }
+}
+
+/// The type of the onClick callback for the (mobile) Sign In Button.
+typedef HandleSignInFn = Future<void> Function();
+
+/// Renders a SIGN IN button that calls `handleSignIn` onclick.
+Widget buildSignInButton({HandleSignInFn? onPressed}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    child: const Text('SIGN IN WITH GOOGLE'),
+  );
+}
+
+// CustomInfo widget for displaying messages
+class CustomInfo extends StatefulWidget {
+  final String message;
+  final Duration duration;
+
+  const CustomInfo({
+    super.key,
+    required this.message,
+    this.duration = const Duration(seconds: 3),
+  });
+
+  @override
+  _CustomInfoState createState() => _CustomInfoState();
+}
+
+class _CustomInfoState extends State<CustomInfo> {
+  bool _isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _hideAfterDelay();
+  }
+
+  void _hideAfterDelay() {
+    Future.delayed(widget.duration, () {
+      if (mounted) {
+        setState(() {
+          _isVisible = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isVisible
+        ? Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.shade800,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              widget.message,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )
+        : const SizedBox.shrink();
   }
 }
