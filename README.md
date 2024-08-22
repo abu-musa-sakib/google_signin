@@ -21,8 +21,6 @@ sequenceDiagram
     FlutterApp ->> FirebaseConsole: Loads Configuration Files
     FirebaseConsole -->> FlutterApp: Provides OAuth2 Client IDs
     
-    FlutterApp ->> GoogleSignInSDK: Initializes GoogleSignIn
-    
     FlutterApp ->> GoogleSignInSDK: Initiates Sign-In Flow
     
     GoogleSignInSDK ->> GoogleOAuth2: Requests Authorization
